@@ -6,7 +6,9 @@ import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
 
 /**DDD設計で実装**/
 public class CreateDrillList {
@@ -91,7 +93,10 @@ class PlusDrillService implements DrillService {
         if (drillSize <= 0) {
             return new HashSet<>();
         }//0以下の場合、空のリストを返す
-        Integer tempDriller = new Integer(drillSize);
+
+        Function<Integer,Integer> copyInteger = x -> x;
+        Integer tempDriller = copyInteger.apply(drillSize);
+
         UnaryOperator<Integer> incrementOfPlus = x -> ++x;
         BiFunction<Integer, Integer, Integer> rightCalc = (y, z) -> y - z;
         BiPredicate<Integer, Integer> isCounterMax = (cnt, inputCnt) -> cnt < inputCnt;
@@ -137,7 +142,9 @@ class MinusDrillService implements DrillService {
         //左の式は固定のため1度だけ作成
         String operandLeft = String.valueOf(drillSize);
 
-        Integer tempDriller = new Integer(drillSize);
+        Function<Integer,Integer> copyInteger = x -> x;
+        Integer tempDriller = copyInteger.apply(drillSize);
+
         UnaryOperator<Integer> incrementOfMinus = x -> --x;
         BiPredicate<Integer, Integer> isCounterMax = (cnt, inputCnt) -> cnt < inputCnt;
         Predicate<Integer> isCalcMin = (inputCnt) -> inputCnt == stopSize; //右の式が0になったら終了
